@@ -122,6 +122,14 @@ public class DynamicArray<E> {
         return data[index];
     }
 
+    public E getFirst(){
+        return get(0);
+    }
+
+    public E getLast(){
+        return get(size - 1);
+    }
+
     @Override
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
