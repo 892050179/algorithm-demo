@@ -1,35 +1,36 @@
-package com.demo.stack;
+package com.demo.queue;
 
 import com.demo.array.DynamicArray;
 
 /**
- * 通过动态数组实现栈
+ * 通过动态数组实现队列
  * @param <E>
  */
-public class ArrayStack<E> implements Stack<E> {
+public class ArrayQueue<E> implements Queue<E> {
 
     private DynamicArray<E> array;
 
-    public ArrayStack(int capacity){
-        array = new DynamicArray<>(capacity);
-    }
-    public ArrayStack(){
+    public ArrayQueue(){
         this(10);
     }
 
+    public ArrayQueue(int capatiye){
+        array = new DynamicArray<>(capatiye);
+    }
+
     @Override
-    public void push(E e) {
+    public void enqueue(E e) {
         array.addLast(e);
     }
 
     @Override
-    public E pop() {
-        return array.removeLast();
+    public E dequeue() {
+        return array.removeFirst();
     }
 
     @Override
-    public E peek() {
-        return array.getLast();
+    public E getFront() {
+        return array.getFirst();
     }
 
     @Override
@@ -37,27 +38,27 @@ public class ArrayStack<E> implements Stack<E> {
         return array.getSize();
     }
 
-    @Override
-    public boolean isEmpty() {
-        return array.isEmpty();
-    }
-
     public int getCapacity(){
         return array.getCapacity();
     }
 
     @Override
+    public boolean isEmpty() {
+        return array.isEmpty();
+    }
+
+    @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
-        res.append("Stack: ");
-        res.append("[");
+        res.append("Queue: ");
+        res.append("Front [");
         for (int i = 0; i < getSize(); i++) {
             res.append(array.get(i));
             if(i != getSize() - 1){
                 res.append(',');
             }
         }
-        res.append("] Top");
+        res.append("] Tail");
         return res.toString();
     }
 }
