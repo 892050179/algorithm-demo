@@ -1,8 +1,7 @@
 package com.demo.queue;
 
-// TODO: 2020/6/30  未实现
 /**
- * 循环队列
+ * 数组实现的循环队列
  * @param <E>
  */
 public class LoopQueue<E> implements Queue<E> {
@@ -12,7 +11,7 @@ public class LoopQueue<E> implements Queue<E> {
     private int size;
 
     public LoopQueue(int capacity){
-        data = (E[])new Object[capacity];
+        data = (E[])new Object[capacity + 1];
     }
 
     public LoopQueue(){
@@ -22,7 +21,7 @@ public class LoopQueue<E> implements Queue<E> {
     @Override
     public void enqueue(E e) {
         if ((tatil + 1) % data.length == front) {
-            resize(2 * data.length - 1);
+            resize(2 * getCapacity());
         }
         data[tatil] = e;
         tatil = (tatil + 1) % data.length;
@@ -31,25 +30,36 @@ public class LoopQueue<E> implements Queue<E> {
 
     @Override
     public E dequeue() {
+        if (isEmpty()){
+            throw new IllegalArgumentException("Cannot dequeue from an empty queue.");
+        }
         E res = data[front];
         data[front] = null;
         front = (front + 1) % data.length;
         size--;
-        if(size == (data.length - 1) / 4 && (data.length - 1) / 2 > 0){
-            resize((data.length - 1) / 2 + 1);
+        if(size == getCapacity() / 4 && getCapacity() / 2 != 0){
+            resize(getCapacity() / 2);
         }
 
         return res;
     }
 
     private void resize(int newCapacity) {
-        E[] newData = (E[]) new Object[newCapacity];
-
+        E[] newData = (E[]) new Object[newCapacity + 1];
+        for(int i = 0; i < size;i++){
+            newData[i] = data[(front + i) % data.length];
+        }
+        data = newData;
+        front = 0;
+        tatil = size;
     }
 
     @Override
     public E getFront() {
-        return null;
+        if (isEmpty()){
+            throw new IllegalArgumentException("Queue is empty.");
+        }
+        return data[front];
     }
 
     public int getCapacity(){
@@ -64,5 +74,22 @@ public class LoopQueue<E> implements Queue<E> {
     @Override
     public boolean isEmpty() {
         return front == tatil;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Queue: ");
+        stringBuilder.append("Front [");
+        int flag = front;
+        while (flag != tatil){
+            stringBuilder.append(data[flag]);
+            flag = (flag + 1) % data.length;
+            if (flag != tatil){
+                stringBuilder.append(",");
+            }
+        }
+        stringBuilder.append("] Tatil");
+        return stringBuilder.toString();
     }
 }
