@@ -35,7 +35,7 @@ public class DynamicArray<E> {
 
     public void add(int index, E e) {
         if(index < 0 || index > size){
-            throw new IndexOutOfBoundsException("Add faild. Index is illegle.");
+            throw new IndexOutOfBoundsException("Add failed. Index is illegal.");
         }
         if (size == data.length){
             resize(data.length * 2);
@@ -59,10 +59,9 @@ public class DynamicArray<E> {
 
     public E remove(int index){
         if (index < 0 || index >= size){
-            throw new IndexOutOfBoundsException("Remove faild.Index is illegle");
+            throw new IndexOutOfBoundsException("Remove failed.Index is illegal");
         }
         E ret = data[index];
-        size --;
         if(size == data.length / 4 && data.length / 2 > 0){
             resize(data.length / 2);
         }
@@ -70,6 +69,7 @@ public class DynamicArray<E> {
             data[i] = data[i + 1];
         }
         data[size] = null;
+        size--;
         return ret;
     }
 
@@ -117,7 +117,7 @@ public class DynamicArray<E> {
 
     public E get(int index){
         if (index < 0 || index >= size){
-            throw new IndexOutOfBoundsException("Remove faild.Index is illegle");
+            throw new IndexOutOfBoundsException("Remove failed.Index is illegal");
         }
         return data[index];
     }

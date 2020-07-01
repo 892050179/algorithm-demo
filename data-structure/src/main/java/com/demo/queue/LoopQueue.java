@@ -7,7 +7,7 @@ package com.demo.queue;
 public class LoopQueue<E> implements Queue<E> {
 
     private E[] data;
-    private int front,tatil;
+    private int front, tail;
     private int size;
 
     public LoopQueue(int capacity){
@@ -20,11 +20,11 @@ public class LoopQueue<E> implements Queue<E> {
 
     @Override
     public void enqueue(E e) {
-        if ((tatil + 1) % data.length == front) {
+        if ((tail + 1) % data.length == front) {
             resize(2 * getCapacity());
         }
-        data[tatil] = e;
-        tatil = (tatil + 1) % data.length;
+        data[tail] = e;
+        tail = (tail + 1) % data.length;
         size++;
     }
 
@@ -51,7 +51,7 @@ public class LoopQueue<E> implements Queue<E> {
         }
         data = newData;
         front = 0;
-        tatil = size;
+        tail = size;
     }
 
     @Override
@@ -73,7 +73,7 @@ public class LoopQueue<E> implements Queue<E> {
 
     @Override
     public boolean isEmpty() {
-        return front == tatil;
+        return front == tail;
     }
 
     @Override
@@ -82,10 +82,10 @@ public class LoopQueue<E> implements Queue<E> {
         stringBuilder.append("Queue: ");
         stringBuilder.append("Front [");
         int flag = front;
-        while (flag != tatil){
+        while (flag != tail){
             stringBuilder.append(data[flag]);
             flag = (flag + 1) % data.length;
-            if (flag != tatil){
+            if (flag != tail){
                 stringBuilder.append(",");
             }
         }
