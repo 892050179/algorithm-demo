@@ -1,6 +1,7 @@
 package com.demo.test;
 
 import com.demo.queue.ArrayQueue;
+import com.demo.queue.LinkedListQueue;
 import com.demo.queue.LoopQueue;
 import com.demo.queue.Queue;
 import org.junit.Test;
@@ -15,7 +16,8 @@ public class QueueTest {
     @Test
     public void implQueueTest(){
 //        implQueueTestTemplate(new ArrayQueue<>());
-        implQueueTestTemplate(new LoopQueue<>());
+//        implQueueTestTemplate(new LoopQueue<>());
+        implQueueTestTemplate(new LinkedListQueue<>());
     }
 
     /**
@@ -35,8 +37,10 @@ public class QueueTest {
 
     @Test
     public void implCompareTestTemplate(){
-        implCompareTestTemplate(new LoopQueue<>() , 100000);
-        implCompareTestTemplate(new ArrayQueue<>() , 100000);
+        int frequency = 100000;
+        implCompareTestTemplate(new LoopQueue<>() , frequency);
+        implCompareTestTemplate(new ArrayQueue<>() , frequency);
+        implCompareTestTemplate(new LinkedListQueue<>(),frequency);
     }
 
     /**
